@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,6 +14,7 @@ public class EnemyMove : MonoBehaviour
     private bool HasStopped = false;
     private bool Randomizer = true;
     private int NextTargetNumber;
+
     //public int SecondsLeft = 30;
     //public bool takingAway = false;
 
@@ -37,26 +38,17 @@ public class EnemyMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Nav = GetComponent<NavMeshAgent>();
+        Nav = GetComponent<NavMeshAgent>();
         Anim = GetComponent<Animator>();
         TheTarget = Target1;
 
+
     }
 
-    private void Awake()
-    {
-        Nav = GetComponent<NavMeshAgent>();
-    }
 
     // Update is called once per frame
     void Update() // Animation 
     {
-        //if (takingAway == false & SecondsLeft > 0)
-        //{
-            //StartCoroutine(TimerTake());
-        //}
-
-
         DistanceToTarget = Vector3.Distance(TheTarget.position, transform.position);
         if (DistanceToTarget > StopDistance)
         {
@@ -71,14 +63,7 @@ public class EnemyMove : MonoBehaviour
             Anim.SetInteger("State", 1);
             StartCoroutine(LookAround());
            
-        }
-        //else if (SecondsLeft == 0)
-        //{
-         //   Nav.destination = PositionTransform.position;
-          //  Anim.SetInteger("State", 3);
-          //  Nav.isStopped = false;
-        //}
-
+        }     
         
     }
     void SetTarget()
@@ -117,14 +102,13 @@ public class EnemyMove : MonoBehaviour
         }
         if (TargetNumber == 9)
         {
-            TheTarget = Target8;
+            TheTarget = Target9;
         }
         if (TargetNumber == 10)
         {
-            TheTarget = Target8;
+            TheTarget = Target10;
         }
     }
-
     IEnumerator LookAround()
     {
         yield return new WaitForSeconds(WaitTime);
@@ -149,21 +133,13 @@ public class EnemyMove : MonoBehaviour
                     }
                 }
                
-            }
-            SetTarget();
-
-            yield return new WaitForSeconds(WaitTime);
-            HasStopped = false;
-            Randomizer = true;
+            }         
         }
+        SetTarget();
+
+        yield return new WaitForSeconds(WaitTime);
+        HasStopped = false;
+        Randomizer = true;
     }
 
-    //IEnumerator TimerTake()
-    //{
-       // takingAway = true;
-       // yield return new WaitForSeconds(1);
-       // SecondsLeft -= 1;
-        //takingAway = false;
-
-    //}
 }
